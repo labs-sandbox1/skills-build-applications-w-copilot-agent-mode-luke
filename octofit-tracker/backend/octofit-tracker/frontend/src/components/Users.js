@@ -37,36 +37,38 @@ const Users = () => {
     fetchUsers();
   }, []);
 
-  if (loading) return <div className="container mt-4">Loading users...</div>;
+  if (loading) return <div className="container mt-4 loading">Loading users...</div>;
   if (error) return <div className="container mt-4 alert alert-danger">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
       <h2>Users</h2>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Date Joined</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.length === 0 ? (
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead>
             <tr>
-              <td colSpan="3">No users found.</td>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Date Joined</th>
             </tr>
-          ) : (
-            users.map((user, index) => (
-              <tr key={user._id || user.id || index}>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.date_joined ? new Date(user.date_joined).toLocaleDateString() : 'N/A'}</td>
+          </thead>
+          <tbody>
+            {users.length === 0 ? (
+              <tr>
+                <td colSpan="3" className="text-center">No users found.</td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              users.map((user, index) => (
+                <tr key={user._id || user.id || index}>
+                  <td><strong>{user.username}</strong></td>
+                  <td>{user.email}</td>
+                  <td>{user.date_joined ? new Date(user.date_joined).toLocaleDateString() : 'N/A'}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

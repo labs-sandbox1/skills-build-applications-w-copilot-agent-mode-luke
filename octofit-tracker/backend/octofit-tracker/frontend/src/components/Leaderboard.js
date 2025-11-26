@@ -37,38 +37,45 @@ const Leaderboard = () => {
     fetchLeaderboard();
   }, []);
 
-  if (loading) return <div className="container mt-4">Loading leaderboard...</div>;
+  if (loading) return <div className="container mt-4 loading">Loading leaderboard...</div>;
   if (error) return <div className="container mt-4 alert alert-danger">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
-      <h2>Leaderboard</h2>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Team</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leaderboard.length === 0 ? (
+      <h2>🏆 Leaderboard</h2>
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead>
             <tr>
-              <td colSpan="3">No leaderboard data found.</td>
+              <th>Rank</th>
+              <th>Team</th>
+              <th>Points</th>
             </tr>
-          ) : (
-            leaderboard
-              .sort((a, b) => b.points - a.points)
-              .map((entry, index) => (
-                <tr key={entry._id || entry.id || index}>
-                  <td>{index + 1}</td>
-                  <td>{entry.team}</td>
-                  <td>{entry.points}</td>
-                </tr>
-              ))
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {leaderboard.length === 0 ? (
+              <tr>
+                <td colSpan="3" className="text-center">No leaderboard data found.</td>
+              </tr>
+            ) : (
+              leaderboard
+                .sort((a, b) => b.points - a.points)
+                .map((entry, index) => (
+                  <tr key={entry._id || entry.id || index}>
+                    <td>
+                      {index === 0 && '🥇 '}
+                      {index === 1 && '🥈 '}
+                      {index === 2 && '🥉 '}
+                      <strong>#{index + 1}</strong>
+                    </td>
+                    <td><span className="badge bg-primary">{entry.team}</span></td>
+                    <td><strong>{entry.points}</strong> points</td>
+                  </tr>
+                ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

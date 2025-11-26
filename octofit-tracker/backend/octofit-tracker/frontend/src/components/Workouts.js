@@ -37,28 +37,31 @@ const Workouts = () => {
     fetchWorkouts();
   }, []);
 
-  if (loading) return <div className="container mt-4">Loading workouts...</div>;
+  if (loading) return <div className="container mt-4 loading">Loading workouts...</div>;
   if (error) return <div className="container mt-4 alert alert-danger">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
-      <h2>Workouts</h2>
-      <div className="row">
-        {workouts.length === 0 ? (
-          <p>No workouts found.</p>
-        ) : (
-          workouts.map((workout, index) => (
-            <div key={workout._id || workout.id || index} className="col-md-6 mb-3">
-              <div className="card">
+      <h2>💪 Workouts</h2>
+      {workouts.length === 0 ? (
+        <div className="alert alert-info">No workouts found.</div>
+      ) : (
+        <div className="row">
+          {workouts.map((workout, index) => (
+            <div key={workout._id || workout.id || index} className="col-md-6 col-lg-4 mb-4">
+              <div className="card h-100">
                 <div className="card-body">
                   <h5 className="card-title">{workout.name}</h5>
                   <p className="card-text">{workout.description}</p>
                 </div>
+                <div className="card-footer bg-transparent">
+                  <button className="btn btn-primary btn-sm w-100">Start Workout</button>
+                </div>
               </div>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

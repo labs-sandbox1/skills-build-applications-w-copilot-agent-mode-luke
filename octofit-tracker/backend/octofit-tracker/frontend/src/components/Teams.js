@@ -37,26 +37,35 @@ const Teams = () => {
     fetchTeams();
   }, []);
 
-  if (loading) return <div className="container mt-4">Loading teams...</div>;
+  if (loading) return <div className="container mt-4 loading">Loading teams...</div>;
   if (error) return <div className="container mt-4 alert alert-danger">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
       <h2>Teams</h2>
-      <div className="row">
-        {teams.length === 0 ? (
-          <p>No teams found.</p>
-        ) : (
-          teams.map((team, index) => (
-            <div key={team._id || team.id || index} className="col-md-6 mb-3">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">{team.name}</h5>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Team Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {teams.length === 0 ? (
+              <tr>
+                <td colSpan="2" className="text-center">No teams found.</td>
+              </tr>
+            ) : (
+              teams.map((team, index) => (
+                <tr key={team._id || team.id || index}>
+                  <td>{index + 1}</td>
+                  <td><span className="badge bg-primary">{team.name}</span></td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

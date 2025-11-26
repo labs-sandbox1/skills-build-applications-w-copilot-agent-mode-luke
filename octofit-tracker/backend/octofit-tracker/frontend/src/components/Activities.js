@@ -37,28 +37,37 @@ const Activities = () => {
     fetchActivities();
   }, []);
 
-  if (loading) return <div className="container mt-4">Loading activities...</div>;
+  if (loading) return <div className="container mt-4 loading">Loading activities...</div>;
   if (error) return <div className="container mt-4 alert alert-danger">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
       <h2>Activities</h2>
-      <div className="row">
-        {activities.length === 0 ? (
-          <p>No activities found.</p>
-        ) : (
-          activities.map((activity, index) => (
-            <div key={activity._id || activity.id || index} className="col-md-4 mb-3">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">{activity.name}</h5>
-                  <p className="card-text">User: {activity.user_email}</p>
-                  <p className="card-text">Team: {activity.team}</p>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Activity Name</th>
+              <th>User Email</th>
+              <th>Team</th>
+            </tr>
+          </thead>
+          <tbody>
+            {activities.length === 0 ? (
+              <tr>
+                <td colSpan="3" className="text-center">No activities found.</td>
+              </tr>
+            ) : (
+              activities.map((activity, index) => (
+                <tr key={activity._id || activity.id || index}>
+                  <td><strong>{activity.name}</strong></td>
+                  <td>{activity.user_email}</td>
+                  <td><span className="badge bg-primary">{activity.team}</span></td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

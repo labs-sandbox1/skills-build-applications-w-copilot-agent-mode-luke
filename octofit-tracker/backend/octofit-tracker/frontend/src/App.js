@@ -42,8 +42,10 @@ function App() {
         <Routes>
           <Route path="/" element={
             <div className="container mt-4">
-              <h1>Welcome to OctoFit Tracker</h1>
-              <p>Use the navigation menu to explore activities, teams, leaderboard, users, and workouts.</p>
+              <div className="welcome-section">
+                <h1>Welcome to OctoFit Tracker</h1>
+                <p className="lead">Use the navigation menu to explore activities, teams, leaderboard, users, and workouts.</p>
+              </div>
             </div>
           } />
           <Route path="/activities" element={<Activities />} />
